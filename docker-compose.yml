@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  node-app:
+    build: .
+    image: node-app
+    ports:
+      - '3000:3000'
+    depends_on:
+      - mysql
+    volumes:
+      - .:/app
+    networks:
+      - app-network
+
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "note_taking"
+    volumes:
+      - db-data:/var/lib/mysql
+    ports:
+      - 3306:3306
+    networks:
+      - app-network
+
+  redis:
+    image: redis:alpine
+    volumes:
+      - redis-data:/data/redis
+    ports:
+      - '6379:6379'
+
+volumes:
+  db-data:
+  redis-data:
+networks:
+  app-network:
