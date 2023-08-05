@@ -32,7 +32,8 @@
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^3.6.0",
     "sequelize": "^6.32.1",
-    "validator": "^13.0.0"
+    "validator": "^13.0.0",
+    "winston": "^3.10.0"
   },
   "devDependencies": {
     "coveralls": "^3.0.7",
