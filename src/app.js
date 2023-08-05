@@ -1,6 +1,7 @@
 const express = require('express');
 const compression = require('compression');
 const httpStatus = require('http-status');
+const cors = require('cors');
 const routes = require('./routes/v1');
 const { errorConverter, errorHandler } = require('./middlewares/error');
 const ApiError = require('./errors/ApiError');
@@ -13,6 +14,10 @@ app.use(express.json());
 
 // gzip compression
 app.use(compression());
+
+// enable cors
+app.use(cors());
+app.options('*', cors());
 
 // v1 api routes
 app.use('/v1', routes);

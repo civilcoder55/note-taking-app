@@ -1,0 +1,664 @@
+openapi: 3.0.0
+info:
+  title: Note Taking
+  version: 1.0.0
+servers:
+  - url: http://{{base_url}}
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+tags:
+  - name: Auth
+  - name: Notes
+paths:
+  /v1/auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: John Doe
+                email: john_doe@example.com
+                password: password1
+      responses:
+        "201":
+          description: Created
+          headers:
+            content-length:
+              schema:
+                type: integer
+                example: "146"
+            content-type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                result:
+                  id: 5
+                  name: John Doe
+                  email: john_doe@example.com
+                  updatedAt: "2023-08-05T22:01:54.247Z"
+                  createdAt: "2023-08-05T22:01:54.247Z"
+        "400":
+          description: Bad Request
+          headers:
+            content-length:
+              schema:
+                type: integer
+                example: "94"
+            content-type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: 400 Bad Request
+                  value:
+                    code: 400
+                    message: >-
+                      "name" is required, "email" is required, "password" is
+                      required
+                example-1:
+                  summary: Email already taken
+                  value:
+                    code: 400
+                    message: Email already taken
+                example-2:
+                  summary: Password Validation
+                  value:
+                    code: 400
+                    message: password must contain at least 1 letter and 1 number
+                example-3:
+                  summary: Not Allowed Parameters
+                  value:
+                    code: 400
+                    message: '"id" is not allowed'
+  /v1/auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: john_doe@example.com
+                password: password1
+      responses:
+        "200":
+          description: OK
+          headers:
+            content-length:
+              schema:
+                type: integer
+                example: "180"
+            content-type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                result:
+                  token: >-
+                    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImlhdCI6MTY5MTI3MzAxNywiZXhwIjoxNjkxMzU5NDE3fQ.I9wOTxBxfMLBiUnPv6dG1PNbaouwHfOyvU0Z4-ZnOYI
+                  expiresIn: 86400
+        "400":
+          description: Bad Request
+          headers:
+            content-length:
+              schema:
+                type: integer
+                example: "72"
+            content-type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: 400 Bad Request
+                  value:
+                    code: 400
+                    message: '"email" is required, "password" is required'
+                example-1:
+                  summary: Not Allowed Parameters
+                  value:
+                    code: 400
+                    message: '"name" is not allowed'
+        "401":
+          description: Unauthorized
+          headers:
+            content-length:
+              schema:
+                type: integer
+                example: "52"
+            content-type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                code: 401
+                message: Incorrect email or password
+  /v1/auth/me:
+    get:
+      tags:
+        - Auth
+      summary: My Profile
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: OK
+          headers:
+            content-length:
+              schema:
+                type: integer
+                example: "146"
+            content-type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                result:
+                  id: 5
+                  name: John Doe
+                  email: john_doe@example.com
+                  createdAt: "2023-08-05T22:01:54.000Z"
+                  updatedAt: "2023-08-05T22:01:54.000Z"
+        "403":
+          description: Forbidden
+          headers:
+            content-length:
+              schema:
+                type: integer
+                example: "34"
+            content-type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                code: 403
+                message: Forbidden
+  /v1/notes:
+    get:
+      tags:
+        - Notes
+      summary: Get all notes
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: type
+          in: query
+          schema:
+            type: string
+          description: "Filter notes by type - Available values : personal, work"
+          example: personal
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+          description: "Sort notes by field  - Available values : id, type"
+          example: id
+        - name: sortType
+          in: query
+          schema:
+            type: string
+          description: >-
+            Sort notes in descending or ascending order - Available values :
+            desc, asc
+          example: desc
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          description: Limit the number of notes returned (max 100, default 10)
+          example: "100"
+        - name: page
+          in: query
+          schema:
+            type: integer
+          description: Page number for pagination (default 1)
+          example: "1"
+      responses:
+        "200":
+          description: OK
+          headers:
+            content-type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                result:
+                  - id: 21
+                    title: note-for-respond-tasks5
+                    content: "todo: create a documentation for the tasks"
+                    type: work
+                    createdAt: "2023-08-05T22:16:08.000Z"
+                    updatedAt: "2023-08-05T22:16:08.000Z"
+                  - id: 20
+                    title: note-for-respond-tasks4
+                    content: "todo: create a documentation for the tasks"
+                    type: work
+                    createdAt: "2023-08-05T22:16:08.000Z"
+                    updatedAt: "2023-08-05T22:16:08.000Z"
+                  - id: 19
+                    title: note-for-respond-tasks3
+                    content: "todo: create a documentation for the tasks"
+                    type: work
+                    createdAt: "2023-08-05T22:16:08.000Z"
+                    updatedAt: "2023-08-05T22:16:08.000Z"
+                  - id: 18
+                    title: note-for-respond-tasks2
+                    content: "todo: create a documentation for the tasks"
+                    type: work
+                    createdAt: "2023-08-05T22:16:08.000Z"
+                    updatedAt: "2023-08-05T22:16:08.000Z"
+                  - id: 17
+                    title: note-for-respond-task
+                    content: "todo: create a documentation for the tasks"
+                    type: work
+                    createdAt: "2023-08-05T22:16:08.000Z"
+                    updatedAt: "2023-08-05T22:16:08.000Z"
+                  - id: 15
+                    title: change the title only-1
+                    content: please pay your phone bill today
+                    type: personal
+                    createdAt: "2023-08-05T22:15:03.000Z"
+                    updatedAt: "2023-08-05T22:20:43.000Z"
+                  - id: 11
+                    title: note-for-respond-tasks6
+                    content: "todo: create a documentation for the tasks"
+                    type: work
+                    createdAt: "2023-08-05T22:16:08.000Z"
+                    updatedAt: "2023-08-05T22:16:08.000Z"
+        "403":
+          description: Forbidden
+          headers:
+            content-length:
+              schema:
+                type: integer
+                example: "34"
+            content-type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                code: 403
+                message: Forbidden
+    post:
+      tags:
+        - Notes
+      summary: Create a note
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                title: note-for-respond-tasks
+                content: "todo: create a documentation for the tasks"
+                type: work
+      responses:
+        "201":
+          description: Created
+          headers:
+            content-length:
+              schema:
+                type: integer
+                example: "193"
+            content-type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: 201 Created
+                  value:
+                    result:
+                      title: note_OQwItOzsoK
+                      id: 10
+                      content: "todo: create a documentation for the tasks"
+                      type: work
+                      updatedAt: "2023-08-05T22:15:03.085Z"
+                      createdAt: "2023-08-05T22:15:03.085Z"
+                example-1:
+                  summary: 201 Created
+                  value:
+                    result:
+                      id: 11
+                      title: note-for-respond-tasks
+                      content: "todo: create a documentation for the tasks"
+                      type: work
+                      updatedAt: "2023-08-05T22:16:08.064Z"
+                      createdAt: "2023-08-05T22:16:08.064Z"
+        "400":
+          description: Bad Request
+          headers:
+            content-length:
+              schema:
+                type: integer
+                example: "70"
+            content-type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: 400 Bad Request
+                  value:
+                    code: 400
+                    message: '"content" is required, "type" is required'
+                example-1:
+                  summary: 400 Bad Request
+                  value:
+                    code: 400
+                    message: >-
+                      "type" must be one of [personal, work], "type" must be a
+                      string
+                example-2:
+                  summary: Title already taken
+                  value:
+                    code: 400
+                    message: Title already taken
+        "403":
+          description: Forbidden
+          headers:
+            content-length:
+              schema:
+                type: integer
+                example: "34"
+            content-type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                code: 403
+                message: Forbidden
+  /v1/notes/10:
+    get:
+      tags:
+        - Notes
+      summary: Get a note
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: OK
+          headers:
+            content-length:
+              schema:
+                type: integer
+                example: "193"
+            content-type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                result:
+                  id: 10
+                  title: note_OQwItOzsoK
+                  content: "todo: create a documentation for the tasks"
+                  type: work
+                  createdAt: "2023-08-05T22:15:03.000Z"
+                  updatedAt: "2023-08-05T22:15:03.000Z"
+        "403":
+          description: Forbidden
+          headers:
+            content-length:
+              schema:
+                type: integer
+                example: "34"
+            content-type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                code: 403
+                message: Forbidden
+        "404":
+          description: Not Found
+          headers:
+            content-length:
+              schema:
+                type: integer
+                example: "39"
+            content-type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                code: 404
+                message: Note not found
+    patch:
+      tags:
+        - Notes
+      summary: Update a note
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                title: note-for-myself
+                content: please pay your phone bill today
+                type: personal
+      responses:
+        "200":
+          description: OK
+          headers:
+            content-length:
+              schema:
+                type: integer
+                example: "187"
+            content-type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: 200 OK
+                  value:
+                    result:
+                      id: 10
+                      title: note-for-myself
+                      content: please pay your phone bill today
+                      type: personal
+                      createdAt: "2023-08-05T22:15:03.000Z"
+                      updatedAt: "2023-08-05T22:20:16.296Z"
+                example-1:
+                  summary: 200 OK
+                  value:
+                    result:
+                      id: 10
+                      title: change the title only
+                      content: please pay your phone bill today
+                      type: personal
+                      createdAt: "2023-08-05T22:15:03.000Z"
+                      updatedAt: "2023-08-05T22:20:43.123Z"
+        "400":
+          description: Bad Request
+          headers:
+            content-length:
+              schema:
+                type: integer
+                example: "58"
+            content-type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: 400 Bad Request
+                  value:
+                    code: 400
+                    message: '"body" must have at least 1 key'
+                example-1:
+                  summary: Title already taken
+                  value:
+                    code: 400
+                    message: Title already taken
+        "403":
+          description: Forbidden
+          headers:
+            content-length:
+              schema:
+                type: integer
+                example: "34"
+            content-type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                code: 403
+                message: Forbidden
+        "404":
+          description: Not Found
+          headers:
+            content-length:
+              schema:
+                type: integer
+                example: "39"
+            content-type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                code: 404
+                message: Note not found
+    delete:
+      tags:
+        - Notes
+      summary: Delete a note
+      security:
+        - bearerAuth: []
+      responses:
+        "204":
+          description: No Content
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: null
+        "403":
+          description: Forbidden
+          headers:
+            content-length:
+              schema:
+                type: integer
+                example: "34"
+            content-type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                code: 403
+                message: Forbidden
+        "404":
+          description: Not Found
+          headers:
+            content-length:
+              schema:
+                type: integer
+                example: "39"
+            content-type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                code: 404
+                message: Note not found

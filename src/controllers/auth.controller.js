@@ -4,19 +4,18 @@ const { authService, userService, tokenService } = require('../services');
 
 const register = wrapper(async (req, res) => {
   const user = await userService.createUser(req.body);
-  const token = await tokenService.generateToken(user.id);
-  res.status(httpStatus.CREATED).json({ user, token });
+  res.status(httpStatus.CREATED).json({ result: user });
 });
 
 const login = wrapper(async (req, res) => {
   const { email, password } = req.body;
   const user = await authService.loginUserWithEmailAndPassword(email, password);
-  const tokens = tokenService.generateToken(user.id);
-  res.json({ user, tokens });
+  const token = tokenService.generateToken(user.id);
+  res.json({ result: token });
 });
 
 const loggedInUser = wrapper(async (req, res) => {
-  res.json({ user: res.locals.user });
+  res.json({ result: res.locals.user });
 });
 
 module.exports = {

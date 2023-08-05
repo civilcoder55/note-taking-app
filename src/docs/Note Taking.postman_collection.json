@@ -1,0 +1,1474 @@
+{
+	"info": {
+		"_postman_id": "db93cf5b-d74d-41b8-866e-f289d9fbae17",
+		"name": "Note Taking",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19078890"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john_doe@example.com\",\n    \"password\": \"password1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201 Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john_doe@example.com\",\n    \"password\": \"password1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/v1/auth/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "146"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"result\": {\n        \"id\": 5,\n        \"name\": \"John Doe\",\n        \"email\": \"john_doe@example.com\",\n        \"updatedAt\": \"2023-08-05T22:01:54.247Z\",\n        \"createdAt\": \"2023-08-05T22:01:54.247Z\"\n    }\n}"
+						},
+						{
+							"name": "400 Bad Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/v1/auth/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "94"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 400,\n    \"message\": \"\\\"name\\\" is required, \\\"email\\\" is required, \\\"password\\\" is required\"\n}"
+						},
+						{
+							"name": "Email already taken",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john_doe@example.com\",\n    \"password\": \"Password1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/v1/auth/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "44"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 400,\n    \"message\": \"Email already taken\"\n}"
+						},
+						{
+							"name": "Password Validation",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john_doe@example.com\",\n    \"password\": \"password\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/v1/auth/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "77"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 400,\n    \"message\": \"password must contain at least 1 letter and 1 number\"\n}"
+						},
+						{
+							"name": "Not Allowed Parameters",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 5,\n    \"name\": \"John Doe\",\n    \"email\": \"john_doe@example.com\",\n    \"password\": \"password1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/v1/auth/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "46"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 400,\n    \"message\": \"\\\"id\\\" is not allowed\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"john_doe@example.com\",\n    \"password\": \"password1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"john_doe@example.com\",\n    \"password\": \"password1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/v1/auth/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "180"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"result\": {\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImlhdCI6MTY5MTI3MzAxNywiZXhwIjoxNjkxMzU5NDE3fQ.I9wOTxBxfMLBiUnPv6dG1PNbaouwHfOyvU0Z4-ZnOYI\",\n        \"expiresIn\": 86400\n    }\n}"
+						},
+						{
+							"name": "401 Unauthorized",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"john_doe@example.com\",\n    \"password\": \"password\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/v1/auth/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "52"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 401,\n    \"message\": \"Incorrect email or password\"\n}"
+						},
+						{
+							"name": "400 Bad Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/v1/auth/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "72"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 400,\n    \"message\": \"\\\"email\\\" is required, \\\"password\\\" is required\"\n}"
+						},
+						{
+							"name": "Not Allowed Parameters",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john_doe@example.com\",\n    \"password\": \"password1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/v1/auth/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "48"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 400,\n    \"message\": \"\\\"name\\\" is not allowed\"\n}"
+						}
+					]
+				},
+				{
+					"name": "My Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/auth/me",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"auth",
+								"me"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/auth/me",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"auth",
+										"me"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "146"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"result\": {\n        \"id\": 5,\n        \"name\": \"John Doe\",\n        \"email\": \"john_doe@example.com\",\n        \"createdAt\": \"2023-08-05T22:01:54.000Z\",\n        \"updatedAt\": \"2023-08-05T22:01:54.000Z\"\n    }\n}"
+						},
+						{
+							"name": "403 Forbidden",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/auth/me",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"auth",
+										"me"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "34"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 403,\n    \"message\": \"Forbidden\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Notes",
+			"item": [
+				{
+					"name": "Get all notes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/notes?type=personal&sortBy=id&sortType=desc&limit=100&page=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"notes"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "personal",
+									"description": "Filter notes by type - Available values : personal, work"
+								},
+								{
+									"key": "sortBy",
+									"value": "id",
+									"description": "Sort notes by field  - Available values : id, type"
+								},
+								{
+									"key": "sortType",
+									"value": "desc",
+									"description": "Sort notes in descending or ascending order - Available values : desc, asc"
+								},
+								{
+									"key": "limit",
+									"value": "100",
+									"description": "Limit the number of notes returned (max 100, default 10)"
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number for pagination (default 1)"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/notes",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"notes"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"result\": [\n        {\n            \"id\": 21,\n            \"title\": \"note-for-respond-tasks5\",\n            \"content\": \"todo: create a documentation for the tasks\",\n            \"type\": \"work\",\n            \"createdAt\": \"2023-08-05T22:16:08.000Z\",\n            \"updatedAt\": \"2023-08-05T22:16:08.000Z\"\n        },\n        {\n            \"id\": 20,\n            \"title\": \"note-for-respond-tasks4\",\n            \"content\": \"todo: create a documentation for the tasks\",\n            \"type\": \"work\",\n            \"createdAt\": \"2023-08-05T22:16:08.000Z\",\n            \"updatedAt\": \"2023-08-05T22:16:08.000Z\"\n        },\n        {\n            \"id\": 19,\n            \"title\": \"note-for-respond-tasks3\",\n            \"content\": \"todo: create a documentation for the tasks\",\n            \"type\": \"work\",\n            \"createdAt\": \"2023-08-05T22:16:08.000Z\",\n            \"updatedAt\": \"2023-08-05T22:16:08.000Z\"\n        },\n        {\n            \"id\": 18,\n            \"title\": \"note-for-respond-tasks2\",\n            \"content\": \"todo: create a documentation for the tasks\",\n            \"type\": \"work\",\n            \"createdAt\": \"2023-08-05T22:16:08.000Z\",\n            \"updatedAt\": \"2023-08-05T22:16:08.000Z\"\n        },\n        {\n            \"id\": 17,\n            \"title\": \"note-for-respond-task\",\n            \"content\": \"todo: create a documentation for the tasks\",\n            \"type\": \"work\",\n            \"createdAt\": \"2023-08-05T22:16:08.000Z\",\n            \"updatedAt\": \"2023-08-05T22:16:08.000Z\"\n        },\n        {\n            \"id\": 15,\n            \"title\": \"change the title only-1\",\n            \"content\": \"please pay your phone bill today\",\n            \"type\": \"personal\",\n            \"createdAt\": \"2023-08-05T22:15:03.000Z\",\n            \"updatedAt\": \"2023-08-05T22:20:43.000Z\"\n        },\n        {\n            \"id\": 11,\n            \"title\": \"note-for-respond-tasks6\",\n            \"content\": \"todo: create a documentation for the tasks\",\n            \"type\": \"work\",\n            \"createdAt\": \"2023-08-05T22:16:08.000Z\",\n            \"updatedAt\": \"2023-08-05T22:16:08.000Z\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "403 Forbidden",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/notes",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"notes"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "34"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 403,\n    \"message\": \"Forbidden\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get a note",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/notes/10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"notes",
+								"10"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/notes/10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"notes",
+										"10"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "193"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"result\": {\n        \"id\": 10,\n        \"title\": \"note_OQwItOzsoK\",\n        \"content\": \"todo: create a documentation for the tasks\",\n        \"type\": \"work\",\n        \"createdAt\": \"2023-08-05T22:15:03.000Z\",\n        \"updatedAt\": \"2023-08-05T22:15:03.000Z\"\n    }\n}"
+						},
+						{
+							"name": "403 Forbidden",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/notes/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"notes",
+										"1"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "34"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 403,\n    \"message\": \"Forbidden\"\n}"
+						},
+						{
+							"name": "404 Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/notes/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"notes",
+										"1"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "39"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 404,\n    \"message\": \"Note not found\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Create a note",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"note-for-respond-tasks\",\n    \"content\": \"todo: create a documentation for the tasks\",\n    \"type\": \"work\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/notes",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"notes"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201 Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"content\": \"todo: create a documentation for the tasks\",\n    \"type\": \"work\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/v1/notes",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"notes"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "193"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"result\": {\n        \"title\": \"note_OQwItOzsoK\",\n        \"id\": 10,\n        \"content\": \"todo: create a documentation for the tasks\",\n        \"type\": \"work\",\n        \"updatedAt\": \"2023-08-05T22:15:03.085Z\",\n        \"createdAt\": \"2023-08-05T22:15:03.085Z\"\n    }\n}"
+						},
+						{
+							"name": "201 Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"note-for-respond-tasks\",\n    \"content\": \"todo: create a documentation for the tasks\",\n    \"type\": \"work\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/v1/notes",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"notes"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "200"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"result\": {\n        \"id\": 11,\n        \"title\": \"note-for-respond-tasks\",\n        \"content\": \"todo: create a documentation for the tasks\",\n        \"type\": \"work\",\n        \"updatedAt\": \"2023-08-05T22:16:08.064Z\",\n        \"createdAt\": \"2023-08-05T22:16:08.064Z\"\n    }\n}"
+						},
+						{
+							"name": "400 Bad Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/notes",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"notes"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "70"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 400,\n    \"message\": \"\\\"content\\\" is required, \\\"type\\\" is required\"\n}"
+						},
+						{
+							"name": "400 Bad Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"content\": \"todo: create a documentation for the tasks\",\n    \"type\": 123\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/v1/notes",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"notes"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "92"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 400,\n    \"message\": \"\\\"type\\\" must be one of [personal, work], \\\"type\\\" must be a string\"\n}"
+						},
+						{
+							"name": "403 Forbidden",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/notes",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"notes"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "34"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 403,\n    \"message\": \"Forbidden\"\n}"
+						},
+						{
+							"name": "Title already taken",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"note-for-respond-tasks\",\n    \"content\": \"todo: create a documentation for the tasks\",\n    \"type\": \"work\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/v1/notes",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"notes"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "44"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 400,\n    \"message\": \"Title already taken\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update a note",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"note-for-myself\",\n    \"content\": \"please pay your phone bill today\",\n    \"type\": \"personal\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/notes/10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"notes",
+								"10"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 OK",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"note-for-myself\",\n    \"content\": \"please pay your phone bill today\",\n    \"type\": \"personal\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/v1/notes/10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"notes",
+										"10"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "187"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"result\": {\n        \"id\": 10,\n        \"title\": \"note-for-myself\",\n        \"content\": \"please pay your phone bill today\",\n        \"type\": \"personal\",\n        \"createdAt\": \"2023-08-05T22:15:03.000Z\",\n        \"updatedAt\": \"2023-08-05T22:20:16.296Z\"\n    }\n}"
+						},
+						{
+							"name": "200 OK",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"change the title only\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/v1/notes/10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"notes",
+										"10"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "193"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"result\": {\n        \"id\": 10,\n        \"title\": \"change the title only\",\n        \"content\": \"please pay your phone bill today\",\n        \"type\": \"personal\",\n        \"createdAt\": \"2023-08-05T22:15:03.000Z\",\n        \"updatedAt\": \"2023-08-05T22:20:43.123Z\"\n    }\n}"
+						},
+						{
+							"name": "403 Forbidden",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/notes/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"notes",
+										"1"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "34"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 403,\n    \"message\": \"Forbidden\"\n}"
+						},
+						{
+							"name": "400 Bad Request",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/notes/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"notes",
+										"1"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "58"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 400,\n    \"message\": \"\\\"body\\\" must have at least 1 key\"\n}"
+						},
+						{
+							"name": "404 Not Found",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"note-for-respond-tasks\",\n    \"content\": \"todo: create a documentation for the tasks\",\n    \"type\": \"work\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/v1/notes/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"notes",
+										"1"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "39"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 404,\n    \"message\": \"Note not found\"\n}"
+						},
+						{
+							"name": "Title already taken",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"note-for-respond-tasks\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/v1/notes/10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"notes",
+										"10"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "44"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 400,\n    \"message\": \"Title already taken\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete a note",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/notes/10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"notes",
+								"10"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "204 No Content",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/notes/10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"notes",
+										"10"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "403 Forbidden",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/notes/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"notes",
+										"1"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "34"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 403,\n    \"message\": \"Forbidden\"\n}"
+						},
+						{
+							"name": "Delete a note",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/v1/notes/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"v1",
+										"notes",
+										"1"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "39"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 404,\n    \"message\": \"Note not found\"\n}"
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{access_token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://127.0.0.1:3000",
+			"type": "string"
+		},
+		{
+			"key": "access_token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImlhdCI6MTY5MTI3MzAxNywiZXhwIjoxNjkxMzU5NDE3fQ.I9wOTxBxfMLBiUnPv6dG1PNbaouwHfOyvU0Z4-ZnOYI"
+		}
+	]
+}
