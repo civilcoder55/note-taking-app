@@ -1,3 +1,4 @@
+const { nanoid } = require('nanoid');
 const { DataTypes } = require('sequelize');
 const sequelize = require('../databases/mysql');
 const User = require('./user.model');
@@ -18,7 +19,12 @@ const Note = sequelize.define(
         key: 'id',
       },
     },
-    details: {
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: () => `note_${nanoid(10)}`,
+    },
+    content: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
@@ -29,7 +35,20 @@ const Note = sequelize.define(
   },
   {
     underscored: true,
+    indexes: [
+      {
+        unique: true,
+        fields: ['user_id', 'title'],
+      },
+    ],
   }
 );
+
+Note.prototype.toJSON = function () {
+  const values = { ...this.get() };
+  delete values.user_id;
+  delete values.UserId;
+  return values;
+};
 
 module.exports = Note;

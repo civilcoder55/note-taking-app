@@ -9,7 +9,7 @@ const validatePassword = function (plain, hash) {
 
 const loginUserWithEmailAndPassword = async (email, password) => {
   const user = await userService.getUserByEmail(email);
-  if (!user || !validatePassword(password, user.password_hash)) {
+  if (!user || !validatePassword(password, user.password)) {
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect email or password');
   }
   return user;

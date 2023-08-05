@@ -11,7 +11,7 @@ const register = wrapper(async (req, res) => {
 const login = wrapper(async (req, res) => {
   const { email, password } = req.body;
   const user = await authService.loginUserWithEmailAndPassword(email, password);
-  const tokens = await tokenService.generateToken(user.id);
+  const tokens = tokenService.generateToken(user.id);
   res.json({ user, tokens });
 });
 
