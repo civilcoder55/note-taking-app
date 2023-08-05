@@ -4,6 +4,14 @@ const httpStatus = require('http-status');
 const routes = require('./routes/v1');
 const { errorConverter, errorHandler } = require('./middlewares/error');
 const ApiError = require('./errors/ApiError');
+const sequelize = require('./databases/mysql');
+require('./models');
+
+// start mysql database connection and init models
+sequelize
+  .authenticate()
+  .then(() => console.log('Connection has been established successfully.'))
+  .catch((e) => console.error('Unable to connect to the database:', e));
 
 const app = express();
 

@@ -18,7 +18,8 @@
     "lint:fix": "eslint . --fix",
     "prettier": "prettier --check **/*.js",
     "prettier:fix": "prettier --write **/*.js",
-    "docker:up": "docker-compose up -d"
+    "docker:up": "docker-compose up -d",
+    "db:sync": "node src/commands/sync.command.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -29,6 +30,8 @@
     "http-status": "^1.4.0",
     "joi": "^17.3.0",
     "jsonwebtoken": "^8.5.1",
+    "mysql2": "^3.6.0",
+    "sequelize": "^6.32.1",
     "validator": "^13.0.0"
   },
   "devDependencies": {
