@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const { DataTypes } = require('sequelize');
 const sequelize = require('../databases/mysql');
 
@@ -9,18 +10,32 @@ const User = sequelize.define(
       primaryKey: true,
       autoIncrement: true,
     },
-    username: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    password_hash: {
+    email: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      set(value) {
+        this.setDataValue('password', bcrypt.hashSync(value, 10));
+      },
     },
   },
   {
     underscored: true,
   }
 );
+
+User.prototype.toJSON = function () {
+  const values = { ...this.get() };
+  delete values.password;
+  return values;
+};
 
 module.exports = User;
