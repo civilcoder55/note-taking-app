@@ -15,6 +15,9 @@ const envVarsSchema = Joi.object()
     MYSQL_PASSWORD: Joi.string().required().description('Mysql DB password'),
     JWT_SECRET: Joi.string().required().description('JWT secret key'),
     JWT_ACCESS_EXPIRATION_MINUTES: Joi.number().default(30).description('minutes after which access tokens expire'),
+    REDIS_HOST: Joi.string().default('localhost').description('redis server host'),
+    REDIS_PORT: Joi.number().default(6379).description('redis server port'),
+    REDIS_PASSWORD: Joi.string().allow(null, '').description('redis server password'),
   })
   .unknown();
 
@@ -37,5 +40,12 @@ module.exports = {
   jwt: {
     secret: envVars.JWT_SECRET,
     accessExpirationMinutes: envVars.JWT_ACCESS_EXPIRATION_MINUTES,
+  },
+  redis: {
+    socket: {
+      host: envVars.REDIS_HOST,
+      port: envVars.REDIS_PORT,
+    },
+    password: envVars.REDIS_PASSWORD,
   },
 };
