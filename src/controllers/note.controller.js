@@ -3,6 +3,8 @@ const pick = require('../utils/pick');
 const wrapper = require('../utils/wrapper');
 const { noteService } = require('../services');
 const ApiError = require('../errors/ApiError');
+const hashFrom = require('../utils/hashFrom');
+const cacheHelper = require('../helpers/cache.helper');
 
 const createNote = wrapper(async (req, res) => {
   const note = await noteService.createUserNote(res.locals.user.id, req.body);
@@ -12,7 +14,11 @@ const createNote = wrapper(async (req, res) => {
 const getNotes = wrapper(async (req, res) => {
   const filter = pick(req.query, ['type']);
   const options = pick(req.query, ['sortBy', 'sortType', 'limit', 'page']);
-  const result = await noteService.queryUserNotes(res.locals.user.id, filter, options);
+
+  const result = await cacheHelper.hashGetOrSet(`notes::${res.locals.user.id}`, hashFrom(filter, options), () =>
+    noteService.queryUserNotes(res.locals.user.id, filter, options)
+  );
+
   res.json({ result });
 });
 

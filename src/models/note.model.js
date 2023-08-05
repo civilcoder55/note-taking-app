@@ -2,6 +2,7 @@ const { nanoid } = require('nanoid');
 const { DataTypes } = require('sequelize');
 const sequelize = require('../datastores/mysql');
 const User = require('./user.model');
+const cacheHelper = require('../helpers/cache.helper');
 
 const Note = sequelize.define(
   'Note',
@@ -50,5 +51,12 @@ Note.prototype.toJSON = function () {
   delete values.UserId;
   return values;
 };
+
+// invalidate cache after changes
+['afterCreate', 'afterUpdate', 'afterDestroy'].forEach((hookName) => {
+  Note.addHook(hookName, (note) => {
+    cacheHelper.deleteKey(`notes::${note.user_id}`);
+  });
+});
 
 module.exports = Note;
