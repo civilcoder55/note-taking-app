@@ -196,8 +196,8 @@ paths:
                   email: john_doe@example.com
                   createdAt: "2023-08-05T22:01:54.000Z"
                   updatedAt: "2023-08-05T22:01:54.000Z"
-        "403":
-          description: Forbidden
+        "401":
+          description: Unauthorized
           headers:
             content-length:
               schema:
@@ -212,8 +212,8 @@ paths:
               schema:
                 type: object
               example:
-                code: 403
-                message: Forbidden
+                code: 401
+                message: Unauthorized
   /v1/notes:
     get:
       tags:
@@ -310,8 +310,8 @@ paths:
                     type: work
                     createdAt: "2023-08-05T22:16:08.000Z"
                     updatedAt: "2023-08-05T22:16:08.000Z"
-        "403":
-          description: Forbidden
+        "401":
+          description: Unauthorized
           headers:
             content-length:
               schema:
@@ -326,8 +326,8 @@ paths:
               schema:
                 type: object
               example:
-                code: 403
-                message: Forbidden
+                code: 401
+                message: Unauthorized
     post:
       tags:
         - Notes
@@ -413,8 +413,8 @@ paths:
                   value:
                     code: 400
                     message: Title already taken
-        "403":
-          description: Forbidden
+        "401":
+          description: Unauthorized
           headers:
             content-length:
               schema:
@@ -429,8 +429,8 @@ paths:
               schema:
                 type: object
               example:
-                code: 403
-                message: Forbidden
+                code: 401
+                message: Unauthorized
   /v1/notes/10:
     get:
       tags:
@@ -462,8 +462,8 @@ paths:
                   type: work
                   createdAt: "2023-08-05T22:15:03.000Z"
                   updatedAt: "2023-08-05T22:15:03.000Z"
-        "403":
-          description: Forbidden
+        "401":
+          description: Unauthorized
           headers:
             content-length:
               schema:
@@ -478,8 +478,8 @@ paths:
               schema:
                 type: object
               example:
-                code: 403
-                message: Forbidden
+                code: 401
+                message: Unauthorized
         "404":
           description: Not Found
           headers:
@@ -576,8 +576,8 @@ paths:
                   value:
                     code: 400
                     message: Title already taken
-        "403":
-          description: Forbidden
+        "401":
+          description: Unauthorized
           headers:
             content-length:
               schema:
@@ -592,8 +592,8 @@ paths:
               schema:
                 type: object
               example:
-                code: 403
-                message: Forbidden
+                code: 401
+                message: Unauthorized
         "404":
           description: Not Found
           headers:
@@ -626,8 +626,8 @@ paths:
               schema:
                 type: string
               example: null
-        "403":
-          description: Forbidden
+        "401":
+          description: Unauthorized
           headers:
             content-length:
               schema:
@@ -642,8 +642,8 @@ paths:
               schema:
                 type: object
               example:
-                code: 403
-                message: Forbidden
+                code: 401
+                message: Unauthorized
         "404":
           description: Not Found
           headers:
