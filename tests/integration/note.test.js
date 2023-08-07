@@ -1,7 +1,7 @@
 const request = require('supertest');
 const faker = require('faker');
 const httpStatus = require('http-status');
-const redisClient = require('redis-mock');
+const redisClient = require('../../src/datastores/redis');
 const app = require('../../src/app');
 const setupTestDB = require('../utils/setupTestDB');
 const { Note } = require('../../src/models');
