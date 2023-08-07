@@ -8,8 +8,9 @@
     "node": ">=12.0.0"
   },
   "scripts": {
-    "start": "cross-env NODE_ENV=production node src/index.js",
+    "start": "if [ \"$NODE_ENV\" = \"production\" ]; then npm run prod; else npm run dev; fi",
     "dev": "cross-env NODE_ENV=development nodemon src/index.js",
+    "prod": "cross-env NODE_ENV=production node src/index.js",
     "test": "jest -i --colors --verbose --detectOpenHandles",
     "test:watch": "jest -i --watchAll",
     "coverage": "jest -i --coverage",

@@ -3,21 +3,26 @@ version: '3'
 services:
   node-app:
     build: .
-    image: node-app
+    image: note-taking-node
+    container_name: note-taking-node
     ports:
       - '3000:3000'
     depends_on:
       - mysql
+      - redis
     volumes:
       - .:/app
+      - node_modules:/app/node_modules
     networks:
       - app-network
+    command: ['npm', 'start']
 
   mysql:
     image: mysql:latest
+    container_name: note-taking-mysql
     environment:
-      MYSQL_ROOT_PASSWORD: "root"
-      MYSQL_DATABASE: "note_taking"
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_DATABASE: 'note_taking'
     volumes:
       - db-data:/var/lib/mysql
     ports:
@@ -27,6 +32,7 @@ services:
 
   redis:
     image: redis:alpine
+    container_name: note-taking-redis
     volumes:
       - redis-data:/data/redis
     ports:
@@ -37,5 +43,6 @@ services:
 volumes:
   db-data:
   redis-data:
+  node_modules:
 networks:
   app-network:
