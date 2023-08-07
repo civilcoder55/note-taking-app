@@ -33,6 +33,14 @@ const Note = sequelize.define(
       type: DataTypes.ENUM,
       values: ['personal', 'work'],
     },
+    priority: {
+      type: DataTypes.ENUM,
+      values: ['high', 'low'],
+    },
+    privacy: {
+      type: DataTypes.ENUM,
+      values: ['public', 'private'],
+    },
   },
   {
     underscored: true,

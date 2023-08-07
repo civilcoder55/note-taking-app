@@ -5,7 +5,8 @@ const { getUserById } = require('../services/user.service');
 
 const auth = async (req, res, next) => {
   try {
-    const accessToken = req.header('Authorization')?.replace('Bearer ', '');
+    const bearerToken = req.header('Authorization') || '';
+    const accessToken = bearerToken.replace('Bearer ', '');
 
     if (accessToken) {
       const accessTokenPayload = verifyToken(accessToken);
@@ -16,7 +17,9 @@ const auth = async (req, res, next) => {
         return next();
       }
     }
-  } catch (error) {}
+  } catch (error) {
+    // pass
+  }
   return next(new ApiError(httpStatus.UNAUTHORIZED, 'Unauthorized'));
 };
 

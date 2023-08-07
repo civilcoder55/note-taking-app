@@ -1,13 +1,13 @@
 const request = require('supertest');
 const faker = require('faker');
 const httpStatus = require('http-status');
+const redisClient = require('redis-mock');
 const app = require('../../src/app');
 const setupTestDB = require('../utils/setupTestDB');
 const { Note } = require('../../src/models');
 const { userOne, userTwo, insertUsers } = require('../fixtures/user.fixture');
 const { noteOne, noteTwo, insertNotes } = require('../fixtures/note.fixture');
 const { generateToken } = require('../../src/services/token.service');
-const redisClient = require('../../src/datastores/redis');
 
 setupTestDB();
 
@@ -75,6 +75,29 @@ describe('Note routes', () => {
       expect(dbNote).toBeDefined();
       expect(dbNote.user_id).toEqual(userOne.id);
       expect(dbNote).toMatchObject({ content: newNote.content, type: newNote.type });
+    });
+
+    test('should return 201 and successfully create correct note type', async () => {
+      newNote.type = 'work';
+      const res = await request(app)
+        .post('/v1/notes')
+        .set('Authorization', `Bearer ${token}`)
+        .send(newNote)
+        .expect(httpStatus.CREATED);
+
+      expect(res.body.result.priority).toEqual('high');
+      expect(res.body.result.privacy).toEqual('public');
+
+      newNote.type = 'personal';
+      delete newNote.title;
+      const res2 = await request(app)
+        .post('/v1/notes')
+        .set('Authorization', `Bearer ${token}`)
+        .send(newNote)
+        .expect(httpStatus.CREATED);
+
+      expect(res2.body.result.priority).toEqual('low');
+      expect(res2.body.result.privacy).toEqual('private');
     });
 
     test('should return 401 error if access token is missing', async () => {

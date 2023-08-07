@@ -1,6 +1,7 @@
 const httpStatus = require('http-status');
 const Note = require('../models/note.model');
 const ApiError = require('../errors/ApiError');
+const NoteDtoFactory = require('../factories/note.factory');
 
 const getNoteByTitleAndUserId = async (userId, title) => {
   return Note.findOne({ where: { user_id: userId, title } });
@@ -16,10 +17,9 @@ const validateUniqeTitle = async (userId, title, noteId = null) => {
 };
 
 const createUserNote = async (userId, data) => {
-  const noteData = data;
-  noteData.user_id = userId;
+  const dto = NoteDtoFactory.createDto(data.type).fromObj(userId, data);
   await validateUniqeTitle(userId, data.title);
-  return Note.create(noteData);
+  return Note.create(dto);
 };
 
 const queryUserNotes = async (userId, filter, options) => {
@@ -44,8 +44,9 @@ const updateUserNoteById = async (userId, noteId, data) => {
   if (!note) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Note not found');
   }
-  await validateUniqeTitle(userId, data.title, note.id);
-  return note.update(data);
+  const dto = NoteDtoFactory.createDto(data.type || note.type).fromObj(userId, data);
+  await validateUniqeTitle(userId, data.title, noteId);
+  return note.update(dto);
 };
 
 const deleteUserNoteById = async (userId, noteId) => {
