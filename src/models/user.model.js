@@ -29,7 +29,7 @@ const User = sequelize.define(
   },
   {
     underscored: true,
-  }
+  },
 );
 
 User.prototype.toJSON = function () {

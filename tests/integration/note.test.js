@@ -44,7 +44,7 @@ describe('Note routes', () => {
           title: newNote.title,
           content: newNote.content,
           type: newNote.type,
-        })
+        }),
       );
 
       const dbNote = await Note.findByPk(res.body.result.id);
@@ -68,7 +68,7 @@ describe('Note routes', () => {
           title: expect.any(String),
           content: newNote.content,
           type: newNote.type,
-        })
+        }),
       );
 
       const dbNote = await Note.findByPk(res.body.result.id);
@@ -146,7 +146,7 @@ describe('Note routes', () => {
           title: noteTwo.title,
           content: noteTwo.content,
           type: noteTwo.type,
-        })
+        }),
       );
     });
 
@@ -159,8 +159,8 @@ describe('Note routes', () => {
       jest.spyOn(Note, 'findAll');
       jest.spyOn(redisClient, 'HSET');
       const res = await request(app).get('/v1/notes').set('Authorization', `Bearer ${token}`).send().expect(httpStatus.OK);
-      expect(Note.findAll).toBeCalled();
-      expect(redisClient.HSET).toBeCalled();
+      expect(Note.findAll).toHaveBeenCalled();
+      expect(redisClient.HSET).toHaveBeenCalled();
       expect(res.body.result).toHaveLength(2);
       expect(res.body.result[0]).toEqual(
         expect.objectContaining({
@@ -168,14 +168,14 @@ describe('Note routes', () => {
           title: noteTwo.title,
           content: noteTwo.content,
           type: noteTwo.type,
-        })
+        }),
       );
 
       jest.clearAllMocks();
       jest.spyOn(Note, 'findAll');
       jest.spyOn(redisClient, 'HGET').mockReturnValue(JSON.stringify(res.body.result));
       const res2 = await request(app).get('/v1/notes').set('Authorization', `Bearer ${token}`).send().expect(httpStatus.OK);
-      expect(Note.findAll).not.toBeCalled();
+      expect(Note.findAll).not.toHaveBeenCalled();
       expect(res2.body.result).toHaveLength(2);
     });
 
@@ -197,7 +197,7 @@ describe('Note routes', () => {
           title: noteOne.title,
           content: noteOne.content,
           type: noteOne.type,
-        })
+        }),
       );
     });
 
@@ -307,7 +307,7 @@ describe('Note routes', () => {
           title: noteOne.title,
           content: noteOne.content,
           type: noteOne.type,
-        })
+        }),
       );
     });
 
@@ -393,7 +393,7 @@ describe('Note routes', () => {
           title: newNote.title,
           content: newNote.content,
           type: newNote.type,
-        })
+        }),
       );
 
       const dbNote = await Note.findByPk(noteOne.id);

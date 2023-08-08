@@ -31,7 +31,7 @@ describe('Auth routes', () => {
           id: expect.any(Number),
           name: newUser.name,
           email: newUser.email,
-        })
+        }),
       );
       const dbUser = await User.findByPk(res.body.result.id);
       expect(dbUser).toBeDefined();

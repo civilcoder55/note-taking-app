@@ -16,7 +16,7 @@ const getNotes = wrapper(async (req, res) => {
   const options = pick(req.query, ['sortBy', 'sortType', 'limit', 'page']);
 
   const result = await cacheHelper.hashGetOrSet(`notes::${res.locals.user.id}`, hashFrom(filter, options), () =>
-    noteService.queryUserNotes(res.locals.user.id, filter, options)
+    noteService.queryUserNotes(res.locals.user.id, filter, options),
   );
 
   res.json({ result });

@@ -50,7 +50,7 @@ const Note = sequelize.define(
         fields: ['user_id', 'title'],
       },
     ],
-  }
+  },
 );
 
 Note.prototype.toJSON = function () {

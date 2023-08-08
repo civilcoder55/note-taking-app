@@ -27,7 +27,7 @@ describe('Error middlewares', () => {
         expect.objectContaining({
           statusCode: error.statusCode,
           message: error.message,
-        })
+        }),
       );
     });
 
@@ -42,7 +42,7 @@ describe('Error middlewares', () => {
         expect.objectContaining({
           statusCode: httpStatus.INTERNAL_SERVER_ERROR,
           message: error.message,
-        })
+        }),
       );
     });
 
@@ -58,7 +58,7 @@ describe('Error middlewares', () => {
         expect.objectContaining({
           statusCode: error.statusCode,
           message: httpStatus[error.statusCode],
-        })
+        }),
       );
     });
 
@@ -73,7 +73,7 @@ describe('Error middlewares', () => {
         expect.objectContaining({
           statusCode: httpStatus.INTERNAL_SERVER_ERROR,
           message: httpStatus[httpStatus.INTERNAL_SERVER_ERROR],
-        })
+        }),
       );
     });
   });
