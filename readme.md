@@ -130,7 +130,7 @@
 
 * Click on the image to download the collection
 
-[<img src="screenshots/postman.png" width="400px" height="150px">](https://raw.githubusercontent.com/civilcoder55/note-taking/master/src/docs/NoteTaking.postman_collection.json)
+[<img src="screenshots/postman.png" width="400px" height="150px">](https://raw.githubusercontent.com/civilcoder55/note-taking-app/master/src/docs/NoteTaking.postman_collection.json)
 
 ## screens
 
