@@ -8,4 +8,6 @@ RUN npm install
 
 COPY . .
 
+RUN chmod +x ./run.sh
+
 EXPOSE 3000

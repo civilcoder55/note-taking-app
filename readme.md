@@ -30,31 +30,37 @@
    cp .env.example .env
    ```
 
-4. Build images and run containers
+4. ensure run.sh is executable
+
+   ```sh
+   chmod +x run.sh
+   ```
+
+5. Build images and run containers
 
    ```sh
    docker-compose up -d
    ```
 
-5. wait some time until mysql booting then Create and Sync database
+6. Create and Sync database (already run with container up)
 
    ```sh
-   sleep 3 && docker exec -it note-taking-node npm run db:sync
+   docker exec -it note-taking-node npm run db:sync
    ```
 
-6. Access API at
+7. Access API at
 
    ```sh
    http://localhost:3000/v1/docs
    ```
 
-7. Access docker logs
+8. Access docker logs
 
    ```sh
    docker logs -f note-taking-node
    ```
 
-8. To run test
+9. To run test
    ```sh
    docker exec -it note-taking-node npm run test
    ```
@@ -129,7 +135,7 @@
 ## screens
 
 <p align="center">
-  <img src="screenshots/10.png">
+  <img src="screenshots/10.png" width="1300" height="900">
 </p>
 
 <p align="center">
@@ -226,6 +232,7 @@
 - used MySQL's latest official image
 - Create a docker-compose file for the stack to run 1 container of each image, two named volumes for datastores data,
   one bridge network for all stack
+- created bash script to wait for mysql server ready then sync database and run nodejs server
 
 ---
 
@@ -251,7 +258,7 @@
   or
 
   ```sh
-   docker exec -it note-taking-node npm run test
+   docker exec -it note-taking-node npm run coverage
   ```
 
   <p align="center">
@@ -293,7 +300,7 @@
 - MySQL (8.0)
 - Redis (7.0)
 
-## todo
+## ToDo
 
 - [x] Read and analyze task doc
 - [x] boilerplate and init new express app and setup initial configs
