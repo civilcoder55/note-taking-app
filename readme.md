@@ -148,8 +148,9 @@
 
 - used Sequlize orm with MySQL database.
 - defined two models for Note and User.
-- used sync to migrate and update the status of database tables and schema, I could used migration files as best practice to
-  keep the state of the database changes but for simplicity I went for the sync command
+- used sync to migrate and update the status of database tables and schema, I could used migration files as best practice to keep the state of the database changes but for simplicity I went for the sync command
+- i could use models associations and query notes on user instance
+  but i keep it simple by query notes with user_id
 
 ---
 
