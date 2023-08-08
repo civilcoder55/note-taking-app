@@ -270,6 +270,13 @@
 - I used GitHub actions to write a simple ci pipeline to ensure code linting and pass tests
 - I didn't write a cd pipeline, I couldn't find the proper environment or server to deploy (free Heroku Dynos are gone 😭)
 
+<p align="center">
+  <img src="screenshots/12.png" >
+</p>
+
+<p align="center">
+  <img src="screenshots/13.png" >
+</p>
 ---
 
 #### Design patterns
